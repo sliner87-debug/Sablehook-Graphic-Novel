@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sablehook - V3 - Part 1</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Bangers&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            background-color: #050505;
+            color: #ccc;
+            font-family: 'Crimson Text', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .comic-page {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #000;
+            padding: 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Cinzel Decorative', cursive;
+            color: #8b0000;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 5px #000;
+            font-size: 3.5em;
+            margin: 20px 0;
+        }
+        
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 15px; /* The gutter */
+            margin-bottom: 40px;
+        }
+
+        .panel {
+            position: relative;
+            background-color: #111;
+            border: 3px solid #333;
+            overflow: hidden;
+        }
+        
+        .panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(10%) contrast(120%);
+            display: block;
+        }
+
+        /* Custom Panel Spans */
+        .span-12 { grid-column: span 12; }
+        .span-8 { grid-column: span 8; }
+        .span-6 { grid-column: span 6; }
+        .span-4 { grid-column: span 4; }
+        .span-3 { grid-column: span 3; }
+        
+        /* Comic Text Overlays */
+        .caption-box {
+            position: absolute;
+            background-color: #fffae6; /* classic comic yellow */
+            color: #000;
+            border: 2px solid #000;
+            padding: 8px 12px;
+            font-size: 1.1em;
+            font-family: 'Crimson Text', serif;
+            font-weight: bold;
+            line-height: 1.2;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+
+        .speech-bubble {
+            position: absolute;
+            background-color: #fff;
+            color: #000;
+            border: 2px solid #000;
+            border-radius: 50%;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            font-family: 'Bangers', cursive;
+            line-height: 1.2;
+            text-align: center;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+
+        /* Sound effects */
+        .sfx {
+            position: absolute;
+            font-family: 'Bangers', cursive;
+            color: #b142ff;
+            text-transform: uppercase;
+            font-size: 4em;
+            text-shadow: 3px 3px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+            transform: rotate(-10deg);
+            z-index: 5;
+            opacity: 0.8;
+        }
+
+        /* Positioning Helpers */
+        .top-left { top: 10px; left: 10px; }
+        .bottom-right { bottom: 10px; right: 10px; }
+        .top-right { top: 10px; right: 10px; }
+        .bottom-left { bottom: 10px; left: 10px; }
+        
+    </style>
+</head>
+<body>
+
+<div class="comic-page">
+    <h1>PART ONE: V3 BESPOKE</h1>
+
+    <!-- PAGE 1: The Cottage -->
+    <div class="grid-layout">
+        <!-- Wide Establishing Shot -->
+        <div class="panel span-12" style="height: 350px;">
+            <img src="images/v3_bespoke/v3_panel1_cottage_1786146707167.jpg" alt="Cottage">
+            <div class="caption-box top-left" style="width: 250px;">
+                Safety was the first lie they told you. <br><br>And they told it with furniture.
+            </div>
+            <div class="caption-box bottom-right" style="width: 200px;">
+                A heavy oak table meant you were fed. A hearth meant you were warm.
+            </div>
+        </div>
+
+        <!-- Shutter knocking -->
+        <div class="panel span-6" style="height: 300px;">
+            <img src="images/v3_bespoke/v3_panel2_shutter_1786146714237.jpg" alt="Shutter">
+            <div class="sfx" style="top: 20px; left: 10px; color: #8b0000; font-size: 3em;">THWACK!</div>
+            <div class="caption-box bottom-left" style="width: 150px;">
+                I was six when I learned to sleep through the knocking.
+            </div>
+        </div>
+
+        <!-- Broken Cup -->
+        <div class="panel span-6" style="height: 300px;">
+            <img src="images/v3_bespoke/v3_panel3_cup_1786146721096.jpg" alt="Cup">
+            <div class="caption-box top-right" style="width: 150px;">
+                I was seven when I broke my mother's cup.
+            </div>
+            <div class="caption-box bottom-right" style="width: 250px;">
+                I hid the shards under the ash. <br><br> I believed broken things could be saved if you hid them where the heat lived.
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 2: The Attack -->
+    <div class="grid-layout">
+        <!-- Door Kick (Action) -->
+        <div class="panel span-12" style="height: 400px;">
+            <img src="images/v3_bespoke/v3_panel4_doorkick_1786146735469.jpg" alt="Door">
+            <div class="sfx" style="top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg); color: #fff; font-size: 5em;">KRAKKA-KOOM!</div>
+            <div class="caption-box bottom-left" style="width: 200px;">
+                When the violence came, it did not knock.
+            </div>
+        </div>
+
+        <!-- Floorboards (Hiding) -->
+        <div class="panel span-12" style="height: 350px;">
+            <img src="images/v3_bespoke/v3_panel5_floorboards_1786146744118.jpg" alt="Floorboards">
+            <div class="sfx" style="top: 20px; right: 20px; color: #8b0000; font-size: 2em;">Thud. Thud. Thud.</div>
+            <div class="caption-box top-left" style="width: 180px;">
+                The heavy oak table couldn't stop a man's boot. 
+            </div>
+            <div class="caption-box bottom-right" style="width: 200px;">
+                One part of me screamed.<br><br>The other part went glacially still.
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: The Orphan and Corvin -->
+    <div class="grid-layout">
+        <!-- Alleyway -->
+        <div class="panel span-12" style="height: 300px;">
+            <img src="images/v3_bespoke/v3_panel6_alleyway_1786146751001.jpg" alt="Alleyway">
+            <div class="caption-box bottom-right" style="width: 150px;">
+                My first lesson:<br>Exits before furniture.
+            </div>
+            <div class="caption-box top-left" style="width: 250px;">
+                By twelve, I was a calculation. I eliminated variables. I was a ghost in the Quay.
+            </div>
+        </div>
+
+        <!-- The Grab -->
+        <div class="panel span-6" style="height: 400px;">
+            <img src="images/v3_bespoke/v3_panel7_snatch_1786146766889.jpg" alt="Grab">
+            <div class="caption-box top-right" style="width: 180px;">
+                Until I made a mistake.
+            </div>
+            <div class="sfx" style="top: 40%; left: 30%; color: #fff; font-size: 2em; transform: none;">*SNATCH*</div>
+        </div>
+
+        <!-- Corvin Intro -->
+        <div class="panel span-6" style="height: 400px;">
+            <img src="images/v3_bespoke/v3_panel8_corvin_1786146773900.jpg" alt="Corvin">
+            <div class="speech-bubble top-left" style="border-radius: 10px;">
+                If you pull the blade, I will break your arm. Survival is just a slow death.<br>I offer utility.
+            </div>
+            <div class="caption-box bottom-right" style="width: 120px;">
+                He smelled of cold iron and mint.
+            </div>
+        </div>
+    </div>
+    
+    <!-- PAGE 4: The V3 Master Portrait -->
+    <div class="grid-layout">
+        <!-- Bespoke Sable Portrait -->
+        <div class="panel span-12" style="height: 500px;">
+            <img src="images/v3_bespoke/v3_panel9_sable_1786146782990.jpg" alt="Sable Portrait">
+            <div class="caption-box top-left" style="width: 300px;">
+                He didn't teach me how to fight. He taught me the architecture of terror.
+            </div>
+            <div class="caption-box bottom-right" style="width: 300px;">
+                He thought he killed the child in my head.<br><br>He didn't realize she had just taken the key.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
