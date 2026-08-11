@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sablehook - V2</title>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Bangers&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            background-color: #111;
+            color: #ddd;
+            font-family: 'Crimson Text', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .comic-page {
+            max-width: 1050px;
+            width: 100%;
+            background-color: #0a0a0a;
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            position: relative;
+        }
+
+        h1, h2 {
+            text-align: center;
+            font-family: 'Cinzel Decorative', cursive;
+            color: #b00000;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 5px #000;
+        }
+        h1 { font-size: 3.5em; margin: 20px 0; }
+        h2 { font-size: 2.5em; margin: 40px 0 20px; border-bottom: 1px solid #330000; padding-bottom: 10px; }
+        
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 15px; 
+            margin-bottom: 40px;
+        }
+
+        .panel {
+            position: relative;
+            background-color: #000;
+            border: 4px solid #ddd;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        
+        .panel:nth-child(even) { clip-path: polygon(0 0, 100% 2%, 100% 100%, 0 98%); }
+        .panel:nth-child(odd) { clip-path: polygon(0 2%, 100% 0, 100% 98%, 0 100%); }
+        
+        .panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(10%) contrast(120%);
+            display: block;
+        }
+
+        /* Dynamic Panel Spans */
+        .span-12 { grid-column: span 12; height: 350px; }
+        .span-8 { grid-column: span 8; height: 350px; }
+        .span-4 { grid-column: span 4; height: 350px; }
+        .span-7 { grid-column: span 7; height: 400px; }
+        .span-5 { grid-column: span 5; height: 400px; }
+        .span-6 { grid-column: span 6; height: 350px; }
+        .span-3 { grid-column: span 3; height: 300px; }
+        
+        .caption-box {
+            position: absolute;
+            background-color: #fff9e6;
+            color: #000;
+            border: 2px solid #000;
+            padding: 10px 15px;
+            font-size: 1.15em;
+            font-family: 'Crimson Text', serif;
+            font-weight: 700;
+            line-height: 1.3;
+            box-shadow: 4px 4px 0px rgba(0,0,0,1);
+            z-index: 10;
+            max-width: 250px;
+        }
+
+        .speech-bubble {
+            position: absolute;
+            background-color: #fff;
+            color: #000;
+            border: 3px solid #000;
+            border-radius: 50%;
+            padding: 15px 25px;
+            font-size: 1.15em;
+            font-family: 'Bangers', cursive;
+            line-height: 1.2;
+            text-align: center;
+            box-shadow: 3px 3px 0px rgba(0,0,0,1);
+            z-index: 10;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 30%;
+            border-width: 15px 15px 0 0;
+            border-style: solid;
+            border-color: #fff transparent transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 11;
+        }
+        
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -19px;
+            left: 28%;
+            border-width: 18px 18px 0 0;
+            border-style: solid;
+            border-color: #000 transparent transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 10;
+        }
+
+        .sfx {
+            position: absolute;
+            font-family: 'Bangers', cursive;
+            color: #e60000;
+            text-transform: uppercase;
+            font-size: 4em;
+            text-shadow: 4px 4px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+            transform: rotate(-10deg);
+            z-index: 15;
+            opacity: 0.9;
+        }
+
+        .top-left { top: 15px; left: 15px; }
+        .bottom-right { bottom: 15px; right: 15px; }
+        .top-right { top: 15px; right: 15px; }
+        .bottom-left { bottom: 15px; left: 15px; }
+        .center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    </style>
+</head>
+<body>
+<div class="comic-page"><h1>PART 5</h1>
+<div class="grid-layout">
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Banki held court from his towering obsidian throne.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Pell Ashwick thought he could outmaneuver a god.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box top-left">He had been warned.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The consequence for lying to the sovereign was absolute.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">A precise, ruinous lash of supernatural Hellfire snapped across the gothic hall.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">When the flames receded, the hall fell dead silent, save for Pell’s ruined, bubbling, ragged breathing as he lay twitching in a pool of his own ash.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The interrogation continued.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Kestrel descended.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">In her true form—a massive, insectoid Cliff-Skitter beast armored in the organic hide and silver mithril of the Blackfeather Sovereign Panoply—she was a nightmare made flesh.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">When Pell was finally hanging on the absolute jagged edge of death, completely ruined in body, mind, and dignity, Kestrel paused.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Anchored permanently above the hall by an invisible telekinetic grip was a terrifying, humming construct known as The Lesson.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">It was a jagged Magic Crystal Lattice built intricately around a uniquely rare, flawless Twin-Gem Reliquary, thoroughly laced with the pulsing, three-toned energy of the Tri-Weave—arcane purple, divine gold, and psionic blue.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">At the exact moment of Pell's final, rattling breath, the crystal flared.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The hum of The Lesson still vibrated in the teeth of every noble present.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">They expected judgment, perhaps a lesser punishment.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The miraculous light faded, leaving the heavy gloom of the hall intact.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Banki accepted.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Finally, the invisible backbone of the city was summoned.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Banki did not dismiss them.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">[NON-CANON/INVENTED] Scene Setting: Wide exterior shot of the Breakfast Court Keep.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">[NON-CANON/INVENTED] The Silence: Inside the hall, close-up of an observing noble's trembling hands wringing a silk handkerchief so tight it leaves welts on his skin.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">[NON-CANON/INVENTED] Pell Ashwick's Despair: Close-up of Pell Ashwick.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">[NON-CANON/INVENTED] Banki's Gaze: Close-up of Sovereign Banki on the obsidian throne.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">[NON-CANON/INVENTED] The Mind Invasion: Visual metaphor of Banki's telepathy.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">[NON-CANON/INVENTED] The Physical Toll: Pell's physical reaction to the violent mind-reading.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">[NON-CANON/INVENTED] Conjuring Hellfire: Banki's pale hand resting on the throne's armrest.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">[NON-CANON/INVENTED] The Burn: The instant the Hellfire hits Pell.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">[NON-CANON/INVENTED] The Ash: Close-up of the aftermath.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">[NON-CANON/INVENTED] The Predator Lurks: Kestrel's descent preparation.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">[NON-CANON/INVENTED] The Landing: Kestrel lands heavily on the stone, cracking the floorboards.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">[NON-CANON/INVENTED] The Dismantling: Kestrel's massive scything forelimb smoothly slicing into Pell's shoulder joint, pinning his ruined body down while he weakly thrashes.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">[NON-CANON/INVENTED] The Audience's Horror: The noble audience's reaction.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">[NON-CANON/INVENTED] The Architect's Satisfaction: Close-up of Banki resting his chin on his hand.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">[NON-CANON/INVENTED] The Reliquary Awakens: The Twin-Gem Reliquary suspended above begins spinning slowly.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box top-left">[NON-CANON/INVENTED] Soul Extraction: A literal, translucent, ghostly double of Pell Ashwick is violently stretched and ripped upward from his bloody, physical mouth toward the glowing crystal, a look of sheer horror and disbelief on his face.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">[NON-CANON/INVENTED] The Sovereign Steps Down: Banki descending the steps of his obsidian throne, the sapient spear Null-Fang in hand.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">[NON-CANON/INVENTED] Tears of the Loyal: The loyal petitioners.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">[NON-CANON/INVENTED] The Shadow's Visage: Close-up of a Rank 1 Shadow operative's helm as they flank Rennik Vale.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box top-left">[NON-CANON/INVENTED] The Currency of Loyalty: A heavy iron-bound chest hits the floor and bursts open before the kitchen staff.</div>
+</div>
+</div>
+</div>
+    <div class="comic-nav" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1050px; margin: 40px auto; padding: 20px; box-sizing: border-box; background-color: #111; border: 2px solid #333;">
+        <a href="index.html" style="color: #8b0000; font-family: 'Cinzel Decorative', cursive; text-decoration: none; font-size: 1.5em; font-weight: bold; border: 2px solid #8b0000; padding: 10px 20px;">HOME MENU</a>
+        <div>
+            <a href="sable_novel_part_4_comic.html" style="color: #fff; text-decoration: none; background-color: #330000; border: 2px solid #8b0000; padding: 10px 20px; font-family: 'Cinzel Decorative', cursive; font-size: 1.2em; margin-right: 10px; transition: transform 0.2s;">&lt; PREV PART</a>
+            <a href="sable_novel_part_6_comic.html" style="color: #fff; text-decoration: none; background-color: #330000; border: 2px solid #8b0000; padding: 10px 20px; font-family: 'Cinzel Decorative', cursive; font-size: 1.2em; transition: transform 0.2s;">NEXT PART &gt;</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

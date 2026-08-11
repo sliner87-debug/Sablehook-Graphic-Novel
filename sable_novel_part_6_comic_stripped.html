@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sablehook - V2</title>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Bangers&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            background-color: #111;
+            color: #ddd;
+            font-family: 'Crimson Text', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .comic-page {
+            max-width: 1050px;
+            width: 100%;
+            background-color: #0a0a0a;
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            position: relative;
+        }
+
+        h1, h2 {
+            text-align: center;
+            font-family: 'Cinzel Decorative', cursive;
+            color: #b00000;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 5px #000;
+        }
+        h1 { font-size: 3.5em; margin: 20px 0; }
+        h2 { font-size: 2.5em; margin: 40px 0 20px; border-bottom: 1px solid #330000; padding-bottom: 10px; }
+        
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 15px; 
+            margin-bottom: 40px;
+        }
+
+        .panel {
+            position: relative;
+            background-color: #000;
+            border: 4px solid #ddd;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        
+        .panel:nth-child(even) { clip-path: polygon(0 0, 100% 2%, 100% 100%, 0 98%); }
+        .panel:nth-child(odd) { clip-path: polygon(0 2%, 100% 0, 100% 98%, 0 100%); }
+        
+        .panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(10%) contrast(120%);
+            display: block;
+        }
+
+        /* Dynamic Panel Spans */
+        .span-12 { grid-column: span 12; height: 350px; }
+        .span-8 { grid-column: span 8; height: 350px; }
+        .span-4 { grid-column: span 4; height: 350px; }
+        .span-7 { grid-column: span 7; height: 400px; }
+        .span-5 { grid-column: span 5; height: 400px; }
+        .span-6 { grid-column: span 6; height: 350px; }
+        .span-3 { grid-column: span 3; height: 300px; }
+        
+        .caption-box {
+            position: absolute;
+            background-color: #fff9e6;
+            color: #000;
+            border: 2px solid #000;
+            padding: 10px 15px;
+            font-size: 1.15em;
+            font-family: 'Crimson Text', serif;
+            font-weight: 700;
+            line-height: 1.3;
+            box-shadow: 4px 4px 0px rgba(0,0,0,1);
+            z-index: 10;
+            max-width: 250px;
+        }
+
+        .speech-bubble {
+            position: absolute;
+            background-color: #fff;
+            color: #000;
+            border: 3px solid #000;
+            border-radius: 50%;
+            padding: 15px 25px;
+            font-size: 1.15em;
+            font-family: 'Bangers', cursive;
+            line-height: 1.2;
+            text-align: center;
+            box-shadow: 3px 3px 0px rgba(0,0,0,1);
+            z-index: 10;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 30%;
+            border-width: 15px 15px 0 0;
+            border-style: solid;
+            border-color: #fff transparent transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 11;
+        }
+        
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -19px;
+            left: 28%;
+            border-width: 18px 18px 0 0;
+            border-style: solid;
+            border-color: #000 transparent transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 10;
+        }
+
+        .sfx {
+            position: absolute;
+            font-family: 'Bangers', cursive;
+            color: #e60000;
+            text-transform: uppercase;
+            font-size: 4em;
+            text-shadow: 4px 4px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+            transform: rotate(-10deg);
+            z-index: 15;
+            opacity: 0.9;
+        }
+
+        .top-left { top: 15px; left: 15px; }
+        .bottom-right { bottom: 15px; right: 15px; }
+        .top-right { top: 15px; right: 15px; }
+        .bottom-left { bottom: 15px; left: 15px; }
+        .center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    </style>
+</head>
+<body>
+<div class="comic-page"><h1>PART 6</h1>
+<div class="grid-layout">
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Sovereign Banki finally stepped down from the obsidian throne.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Banki bypassed the grand corridors and descended into a heavily fortified, candlelit strategic chamber buried deep within the keep.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">His top officers were already waiting.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Orris Penn stood rigid in the shadows, holding thick, leather-bound ledgers detailing the city's corrupt finances.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">High above them, clinging to the dark, vaulted stone ceiling, lurked Kestrel.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Banki approached the table and ran his hand over the parchment.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">With a nod from Sable, the Rank 1 Shadow operatives deployed.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Within minutes, they were out in the city.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">In a dirty, dimly lit backroom across the city, a greedy merchant noble frantically counted stolen gold coins.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">He was wrong.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Seconds later, the backroom was empty.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">But the ShadowNet was not just for assassination; it was a promise.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Pimwick worked in peace because perched on a stone gargoyle directly above his stall was a hooded Shadow operative.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">But the ShadowNet required precision.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The order was given.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Down in the labyrinthine streets, the operation unfolded in perfect layers.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box top-left">In the East Mouth industrial district, the primary strike team moved.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Inside, panic erupted.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">But Kestrel had already anticipated the exit.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Before the Corrector could even scream, Kestrel crashed down from the stormy sky like a meteor.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Pinned firmly to the cobblestones under massive mithril talons, the Corrector screamed into glowing violet eyes.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The raid was a total, flawless success.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Back in the strategy room, Sovereign Banki watched the final magical nodes of the ShadowNet light up on the parchment.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Outside, the dark, towering gothic spires and smoking chimneys of Sablehook loomed under the oppressive night sky.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The Exodus: A top-down view of the terrified nobles practically running out of the massive gothic doors of the Breakfast Court.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The Descent: Banki walking down a spiraling, torch-lit stone staircase deep into the keep.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Sable's Strategy: Close-up of Sable leaning over the heavy oak map table.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The Ledger's Secrets: Close-up of Orris Penn's hands.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Ignition of the ShadowNet: The heavy oak map table ignites.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The Disguise: A Rank 1 Shadow operative stepping out of a dark alcove into the rain.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The Rooftop Leap: Silhouetted against the swollen, stormy moon of Sablehook, two Shadow operatives leap effortlessly across a massive gap between two wet, gargoyle-studded clock towers.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Paranoia of the Corrupt: Close-up of the greedy merchant's sweaty, fat face in his dimly lit backroom.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The Snare: The Shadow operative's strike.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The Safe Haven: Detail of Pimwick Nacklegear's trading stall.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The Fell Flight Begins: Kestrel exploding outward through a massive stained-glass window of the keep.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The Rat in the Maze: The corrupt Corrector fleeing down a wet, secret stone drainage tunnel, slipping in the green slime.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Seizing the Vault: Null-Fang's perspective.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The Master of the Board: Close-up of Banki's pale hand firmly gripping the edge of the strategic map table.</div>
+</div>
+</div>
+</div>
+    <div class="comic-nav" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1050px; margin: 40px auto; padding: 20px; box-sizing: border-box; background-color: #111; border: 2px solid #333;">
+        <a href="index.html" style="color: #8b0000; font-family: 'Cinzel Decorative', cursive; text-decoration: none; font-size: 1.5em; font-weight: bold; border: 2px solid #8b0000; padding: 10px 20px;">HOME MENU</a>
+        <div>
+            <a href="sable_novel_part_5_comic.html" style="color: #fff; text-decoration: none; background-color: #330000; border: 2px solid #8b0000; padding: 10px 20px; font-family: 'Cinzel Decorative', cursive; font-size: 1.2em; margin-right: 10px; transition: transform 0.2s;">&lt; PREV PART</a>
+            <a href="sable_novel_part_7_comic.html" style="color: #fff; text-decoration: none; background-color: #330000; border: 2px solid #8b0000; padding: 10px 20px; font-family: 'Cinzel Decorative', cursive; font-size: 1.2em; transition: transform 0.2s;">NEXT PART &gt;</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

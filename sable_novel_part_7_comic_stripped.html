@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sablehook - V2</title>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Bangers&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            background-color: #111;
+            color: #ddd;
+            font-family: 'Crimson Text', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .comic-page {
+            max-width: 1050px;
+            width: 100%;
+            background-color: #0a0a0a;
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            position: relative;
+        }
+
+        h1, h2 {
+            text-align: center;
+            font-family: 'Cinzel Decorative', cursive;
+            color: #b00000;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 5px #000;
+        }
+        h1 { font-size: 3.5em; margin: 20px 0; }
+        h2 { font-size: 2.5em; margin: 40px 0 20px; border-bottom: 1px solid #330000; padding-bottom: 10px; }
+        
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 15px; 
+            margin-bottom: 40px;
+        }
+
+        .panel {
+            position: relative;
+            background-color: #000;
+            border: 4px solid #ddd;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        
+        .panel:nth-child(even) { clip-path: polygon(0 0, 100% 2%, 100% 100%, 0 98%); }
+        .panel:nth-child(odd) { clip-path: polygon(0 2%, 100% 0, 100% 98%, 0 100%); }
+        
+        .panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(10%) contrast(120%);
+            display: block;
+        }
+
+        /* Dynamic Panel Spans */
+        .span-12 { grid-column: span 12; height: 350px; }
+        .span-8 { grid-column: span 8; height: 350px; }
+        .span-4 { grid-column: span 4; height: 350px; }
+        .span-7 { grid-column: span 7; height: 400px; }
+        .span-5 { grid-column: span 5; height: 400px; }
+        .span-6 { grid-column: span 6; height: 350px; }
+        .span-3 { grid-column: span 3; height: 300px; }
+        
+        .caption-box {
+            position: absolute;
+            background-color: #fff9e6;
+            color: #000;
+            border: 2px solid #000;
+            padding: 10px 15px;
+            font-size: 1.15em;
+            font-family: 'Crimson Text', serif;
+            font-weight: 700;
+            line-height: 1.3;
+            box-shadow: 4px 4px 0px rgba(0,0,0,1);
+            z-index: 10;
+            max-width: 250px;
+        }
+
+        .speech-bubble {
+            position: absolute;
+            background-color: #fff;
+            color: #000;
+            border: 3px solid #000;
+            border-radius: 50%;
+            padding: 15px 25px;
+            font-size: 1.15em;
+            font-family: 'Bangers', cursive;
+            line-height: 1.2;
+            text-align: center;
+            box-shadow: 3px 3px 0px rgba(0,0,0,1);
+            z-index: 10;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 30%;
+            border-width: 15px 15px 0 0;
+            border-style: solid;
+            border-color: #fff transparent transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 11;
+        }
+        
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -19px;
+            left: 28%;
+            border-width: 18px 18px 0 0;
+            border-style: solid;
+            border-color: #000 transparent transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 10;
+        }
+
+        .sfx {
+            position: absolute;
+            font-family: 'Bangers', cursive;
+            color: #e60000;
+            text-transform: uppercase;
+            font-size: 4em;
+            text-shadow: 4px 4px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+            transform: rotate(-10deg);
+            z-index: 15;
+            opacity: 0.9;
+        }
+
+        .top-left { top: 15px; left: 15px; }
+        .bottom-right { bottom: 15px; right: 15px; }
+        .top-right { top: 15px; right: 15px; }
+        .bottom-left { bottom: 15px; left: 15px; }
+        .center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    </style>
+</head>
+<body>
+<div class="comic-page"><h1>PART 7</h1>
+<div class="grid-layout">
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Before the summoning could begin, the heavy oak doors of the hall were perfectly sealed.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Without warning, the massive, intricate magical summoning circle etched into the stone floor flared to life.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The heavy, oppressive heat of the portal opening caused the wax of the surrounding candles on the stone table to melt and pool instantly.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Stepping gracefully from the roaring flames was Asmodeus, the Prince of the Hells.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">His massive, cloven demonic hoof stepped heavily out of the flames and onto the medieval stone floor, instantly scorching the stone black where he stood.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Asmodeus looked around the hall, a terrifyingly charming smile revealing rows of dangerously sharp, inhuman demonic teeth.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">But Sable did not flinch.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Faint, extremely complex magical legal runes embossed on the heavy leather cover glowed slightly as her mithral-gauntleted hand held it.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The heavy, ancient ledger hit the massive stone table with a heavy thud, sliding precisely to a stop directly in front of the Prince of the Hells.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Asmodeus looked across the table at her, a smirk of genuine respect and serious interest crossing his terrifying face.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Sable met his gaze without breaking, staring coldly across the table.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Standing behind her was Sovereign Banki.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Null-Fang radiated a deeply menacing, hungry dark aura.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">To solidify his standing, Banki raised his gauntleted hand.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Immediately after, a cold gold glowing magical thread of the Divine snapped into place tightly alongside the blue and violet threads, perfectly completing the foundational Tri-Weave hidden-join structure.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The three threads wrapped perfectly around his fingers.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Asmodeus’s smirk entirely vanished.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">His terrifying, glowing red eyes narrowed in sudden realization, caution, and anger.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Banki escalated the demonstration to terrifying levels.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The dark ribbon wove seamlessly into the others, summoning a towering, physical Tri-Weave Sovereign Throne behind him.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The Sovereign seated himself confidently in the massive, glowing throne of interwoven threads.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">With serious respect for the power presented to him, Asmodeus accepted the terms.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Bringing it to the table, the towering demonic prince signed the heavy leather-bound infernal instrument.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The black flame quill scorched the heavy parchment contract as Asmodeus rapidly signed his elaborate, infernal demonic signature.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Sovereign Banki moved next.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">He actively signed his name next to Asmodeus's on the glowing infernal parchment.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The instant the quills lifted, the signed parchment flared, glowing with heavy, binding magical seals.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">A heavy wax seal on the glowing parchment melted and set simultaneously, branded perfectly by a mixture of red infernal fire and void-black Sovereign magic.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Upon execution of the contract, Asmodeus delivered the mandatory signing consideration immediately.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The business concluded, Banki utilized his magic, glowing threads of the Tri-Weave and the void-black Sovereign Thread swirling around his raised hand as he formally dismissed the Prince of the Hells.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The roaring hellfire of the massive magical summoning circle suddenly and violently collapsed inwards, sucking all the heat out of the dark, medieval room.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Sovereign Banki and Sable gathered tightly around the stone table, the smoke clearing.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Sable's delicate, highly-detailed mithral-gauntleted hand carefully traced the complex, heavy brass gears on the side of the machine.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The Engine's core glowed intensely with a contained red light.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Sovereign Banki and Sable looked at each other over the humming Concordance Engine.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Banki lifts the heavy brass-and-iron Concordance Engine off the massive stone table.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Banki and Sable walk toward the heavily warded oak doors of the Breakfast Court Hall.</div>
+</div>
+</div>
+</div>
+    <div class="comic-nav" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1050px; margin: 40px auto; padding: 20px; box-sizing: border-box; background-color: #111; border: 2px solid #333;">
+        <a href="index.html" style="color: #8b0000; font-family: 'Cinzel Decorative', cursive; text-decoration: none; font-size: 1.5em; font-weight: bold; border: 2px solid #8b0000; padding: 10px 20px;">HOME MENU</a>
+        <div>
+            <a href="sable_novel_part_6_comic.html" style="color: #fff; text-decoration: none; background-color: #330000; border: 2px solid #8b0000; padding: 10px 20px; font-family: 'Cinzel Decorative', cursive; font-size: 1.2em; margin-right: 10px; transition: transform 0.2s;">&lt; PREV PART</a>
+            <a href="sable_novel_part_8_comic.html" style="color: #fff; text-decoration: none; background-color: #330000; border: 2px solid #8b0000; padding: 10px 20px; font-family: 'Cinzel Decorative', cursive; font-size: 1.2em; transition: transform 0.2s;">NEXT PART &gt;</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

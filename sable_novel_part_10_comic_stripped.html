@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sablehook - V2</title>
+            <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Bangers&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            background-color: #000;
+            color: #ccc;
+            font-family: 'Crimson Text', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .comic-page {
+            max-width: 1050px;
+            width: 100%;
+            background-color: #030303;
+            padding: 30px;
+            box-shadow: 0 0 100px rgba(100,0,0,0.2);
+            position: relative;
+        }
+
+        h1, h2 {
+            text-align: center;
+            font-family: 'Cinzel Decorative', cursive;
+            color: #8b0000;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px 10px #000, 0 0 20px rgba(139,0,0,0.5);
+        }
+        h1 { font-size: 4em; margin: 20px 0; }
+        h2 { font-size: 2.5em; margin: 40px 0 20px; border-bottom: 2px solid #440000; padding-bottom: 10px; }
+        
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 15px; 
+            margin-bottom: 40px;
+        }
+
+        .panel {
+            position: relative;
+            background-color: #000;
+            border: 4px solid #222;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .panel:hover {
+            border-color: #660000;
+        }
+        
+        /* Jagged, aggressive clip paths */
+        .panel:nth-child(3n+1) { clip-path: polygon(1% 0, 100% 2%, 98% 100%, 0 99%); }
+        .panel:nth-child(3n+2) { clip-path: polygon(0 2%, 99% 0, 100% 98%, 2% 100%); }
+        .panel:nth-child(3n) { clip-path: polygon(0 0, 100% 1%, 100% 100%, 1% 98%); }
+        
+        .panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%) contrast(140%) sepia(20%) hue-rotate(330deg);
+            display: block;
+        }
+
+        .span-12 { grid-column: span 12; height: 350px; }
+        .span-8 { grid-column: span 8; height: 350px; }
+        .span-4 { grid-column: span 4; height: 350px; }
+        .span-7 { grid-column: span 7; height: 400px; }
+        .span-5 { grid-column: span 5; height: 400px; }
+        .span-6 { grid-column: span 6; height: 350px; }
+        .span-3 { grid-column: span 3; height: 300px; }
+        
+        .caption-box {
+            position: absolute;
+            background-color: #0a0a0a;
+            color: #d4d4d4;
+            border: 1px solid #4a0000;
+            border-left: 4px solid #8b0000;
+            padding: 12px 18px;
+            font-size: 1.15em;
+            font-family: 'Crimson Text', serif;
+            font-weight: 400;
+            line-height: 1.4;
+            box-shadow: 4px 4px 15px rgba(0,0,0,0.9);
+            z-index: 10;
+            max-width: 280px;
+        }
+
+        .speech-bubble {
+            position: absolute;
+            background-color: #111;
+            color: #ddd;
+            border: 2px solid #550000;
+            border-radius: 5px; /* Boxier for grimdark */
+            padding: 15px 25px;
+            font-size: 1.15em;
+            font-family: 'Bangers', cursive;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            text-align: center;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.9);
+            z-index: 10;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 30%;
+            border-width: 15px 15px 0 0;
+            border-style: solid;
+            border-color: #111 transparent transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 11;
+        }
+        
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            left: 28%;
+            border-width: 18px 18px 0 0;
+            border-style: solid;
+            border-color: #550000 transparent transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 10;
+        }
+
+        .sfx {
+            position: absolute;
+            font-family: 'Bangers', cursive;
+            color: #b30000;
+            text-transform: uppercase;
+            font-size: 4.5em;
+            text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 5px 5px 15px rgba(0,0,0,0.8);
+            transform: rotate(-10deg);
+            z-index: 15;
+            opacity: 0.85;
+            mix-blend-mode: hard-light;
+        }
+
+        .top-left { top: 15px; left: 15px; }
+        .bottom-right { bottom: 15px; right: 15px; }
+        .top-right { top: 15px; right: 15px; }
+        .bottom-left { bottom: 15px; left: 15px; }
+        .center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    </style>
+</head>
+<body>
+<div class="comic-page"><h1>PART 10</h1>
+<div class="grid-layout">
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Proto-1 watched them all.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Banki stepped to the red salt line.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The child-sized heat form rolled into the outer lane.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Proto-2 was not a copy.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Banki needed more power.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Banki sent the Sovereign Thread through all fourteen.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The Military Line felt different.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">So he did.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Mara drew two boxes on the slate.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The Guttered Lantern was neutral ground.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Behind Aldric: Maren.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Maren approached his table with easy confidence.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">As she stood to leave, Aldric looked over.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Maren sat at a corner table, listening to two dock workers discuss the salvage man's underground facility.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Her blood ran cold.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Banki ascended the building's exterior wall in pixie form, peering through the warded window of the Quiet Loft.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box top-left">He pushed his Mind-Sense through the window like a knife through water, reading the thoughts of the illusionist Solenne and her wealthy client.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Sable met him on the canal walk at dusk.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Banki closed his awareness away from her.</div>
+</div>
+<div class="panel span-8">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">The Hall of the Crown's Justice.</div>
+</div>
+<div class="panel span-4">
+<img src="[REDACTED]">
+<div class="caption-box top-left">Velmaren's advocate tried to change the battlefield, accusing Sablehook of harboring war-beasts.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Mara laid public bonds on the table.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The irreversible cost was reputation.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Dawn came to Camp Eight.</div>
+</div>
+<div class="panel span-12">
+<img src="[REDACTED]">
+<div class="caption-box top-left">The beast erupted from the ledge.</div>
+</div>
+<div class="panel span-7">
+<img src="[REDACTED]">
+<div class="caption-box bottom-right">Banki answered with the industrialized, horrific power of High Magic, his eldritch blast taking the Screaming Skull form.</div>
+</div>
+<div class="panel span-5">
+<img src="[REDACTED]">
+<div class="caption-box top-left">They took the beast alive.</div>
+</div>
+</div>
+</div>
+    <div class="comic-nav" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1050px; margin: 40px auto; padding: 20px; box-sizing: border-box; background-color: #111; border: 2px solid #333;">
+        <a href="index.html" style="color: #8b0000; font-family: 'Cinzel Decorative', cursive; text-decoration: none; font-size: 1.5em; font-weight: bold; border: 2px solid #8b0000; padding: 10px 20px;">HOME MENU</a>
+        <div>
+            <a href="sable_novel_part_9_comic.html" style="color: #fff; text-decoration: none; background-color: #330000; border: 2px solid #8b0000; padding: 10px 20px; font-family: 'Cinzel Decorative', cursive; font-size: 1.2em; margin-right: 10px; transition: transform 0.2s;">&lt; PREV PART</a>
+            <a href="sable_novel_part_11_comic.html" style="color: #fff; text-decoration: none; background-color: #330000; border: 2px solid #8b0000; padding: 10px 20px; font-family: 'Cinzel Decorative', cursive; font-size: 1.2em; transition: transform 0.2s;">NEXT PART &gt;</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
