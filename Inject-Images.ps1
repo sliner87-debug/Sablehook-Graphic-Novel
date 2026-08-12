@@ -9,13 +9,10 @@ param(
 $content = Get-Content -Path $HtmlFile -Raw
 $matches = [regex]::Matches($content, '(?i)<img[^>]+src="([^"]+)"')
 
-if ($matches.Count -ne $ImagePaths.Count) {
-    Write-Error "Mismatch! HTML has $($matches.Count) images, but provided $($ImagePaths.Count) paths."
-    exit 1
-}
+# strict check removed
 
 $offset = 0
-for ($i = 0; $i -lt $matches.Count; $i++) {
+for ($i = 0; $i -lt $ImagePaths.Count; $i++) {
     $match = $matches[$i]
     $imagePath = $ImagePaths[$i]
     
